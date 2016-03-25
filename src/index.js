@@ -77,9 +77,10 @@ server.route({
         const clientSecret = new Buffer(clientString).toString('base64');
         let options = {
             headers: {
+                'content-type': 'application/x-www-form-urlencoded',
                 'Authorization': `Basic ${clientSecret}`
             },
-            payload: JSON.stringify(payload)
+            payload: querystring.stringify(payload)
         };
 
         console.info(`URL: ${url}`);
