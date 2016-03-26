@@ -1,12 +1,11 @@
 import Wreck from 'wreck';
 
 /**
- * Generic http client POST for spotify api
+ * Generic http client for spotify api
  * 
  * @param options
  */
 export function spotifyRequest(method, url, options) {
-    console.info(`IN POST with ${method}`);
     
     return new Promise((resolve, reject) => {
 
