@@ -37,8 +37,7 @@ export function obtainOauth(request, reply) {
             },
             payload: querystring.stringify(payload)
         };
-
-        console.info(`POST ${options}`);
+        
         const tokens = await spotifyRequest('POST', url, options);
 
         const { access_token, refresh_token } = JSON.parse(tokens);
@@ -47,8 +46,7 @@ export function obtainOauth(request, reply) {
                 'Authorization': `Bearer ${access_token}`
             }
         };
-
-        console.info(`POST ${bearerOption}`);
+        
         const response = await spotifyRequest('GET', 'https://api.spotify.com/v1/me', bearerOption);
         console.info(`RESPONSE: ${response}`);
     }
