@@ -14,8 +14,10 @@ export function spotifyRequest(method, url, options) {
 
             Wreck.read(response, null, (error, body) => {
                 if (error) {
+                    console.error(`ERROR calling ${url} with error: ${error}`);
                     reject(error);
                 } else {
+                    console.info(`RESPONSE from ${url}: ${body.toString('utf8')}`);
                     resolve(body.toString('utf8'));
                 }
             });

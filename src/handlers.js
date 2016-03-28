@@ -1,6 +1,8 @@
+import constants from './lib/constants';
 import keys from '../config/keys';
+import QS from 'querystring';
 import { spotifyRequest } from './httpclient';
-import querystring from 'querystring';
+import { obtainOauth } from './lib/tokenUtil';
 import * as util from './util';
 
 export function loginHandler(request, reply) {
@@ -8,7 +10,7 @@ export function loginHandler(request, reply) {
     const stateKey = 'spotify_auth_state';
 
     reply.redirect('https://accounts.spotify.com/authorize?' +
-        querystring.stringify({
+        QS.stringify({
             response_type: 'code',
             client_id: keys.client_id,
             scope: keys.scope,
@@ -18,36 +20,11 @@ export function loginHandler(request, reply) {
     )
 }
 
-export function obtainOauth(request, reply) {
-    
+export function getUserInfo(request, reply) {
     return async function () {
-        const url = 'https://accounts.spotify.com/api/token';
-        const payload = {
-            grant_type: 'authorization_code',
-            code: request.query.code,
-            redirect_uri: 'http://localhost:8000/callback'
-        };
-
-        const clientString = `${keys.client_id}:${keys.secret}`;
-        const clientSecret = new Buffer(clientString).toString('base64');
-        let options = {
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded',
-                'Authorization': `Basic ${clientSecret}`
-            },
-            payload: querystring.stringify(payload)
-        };
+        const bearerOptions = await obtainOauth(request, reply)();
         
-        const tokens = await spotifyRequest('POST', url, options);
-
-        const { access_token, refresh_token } = JSON.parse(tokens);
-        const bearerOption = {
-            headers: {
-                'Authorization': `Bearer ${access_token}`
-            }
-        };
-        
-        const response = await spotifyRequest('GET', 'https://api.spotify.com/v1/me', bearerOption);
-        console.info(`RESPONSE: ${response}`);
+        const response = await spotifyRequest('GET', 'https://api.spotify.com/v1/me', bearerOptions);
+        console.log(`RESPONSE: ${response}`);
     }
 }
