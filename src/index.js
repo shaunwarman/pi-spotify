@@ -3,7 +3,7 @@ import Hapi from 'hapi';
 import Vision from 'vision';
 import Wreck from 'wreck';
 
-import { loginHandler, obtainOauth } from './handlers'
+import { getUserInfo, loginHandler } from './handlers'
 import loggingOptions from './logging'
 
 // create a server with a host and port
@@ -30,7 +30,7 @@ server.route({
 server.route({
     method: 'GET',
     path:'/callback',
-    handler: (request, reply) => obtainOauth(request, reply)()
+    handler: (request, reply) => getUserInfo(request, reply)()
 });
 
 // start the server
