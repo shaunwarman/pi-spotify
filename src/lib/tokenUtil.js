@@ -36,13 +36,11 @@ function setupClientSecret(request) {
     const clientString = `${keys.client_id}:${keys.secret}`;
     const clientSecret = new Buffer(clientString).toString('base64');
     
-    const options = {
+    return {
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
             'Authorization': `Basic ${clientSecret}`
         },
         payload: QS.stringify(payload)
     };
-    
-    return options;
 }
