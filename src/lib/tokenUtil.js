@@ -3,26 +3,34 @@ import keys from '../../config/keys';
 import QS from 'querystring';
 import { spotifyRequest } from '../httpclient';
 
-export function obtainOauth(request, reply) {
-
-    return async function () {
-        const url = constants.TOKEN_URL;
-        const options = setupClientSecret(request);
-
-        try {
-            const tokens = await spotifyRequest('POST', url, options);
+export function oauth(request, reply) {
     
-            const { access_token, refresh_token } = JSON.parse(tokens);
+    return async function () {
+        try {
+            const { access_token, refresh_token } = JSON.parse(await getToken(request));
             const bearerOption = {
                 headers: {
                     'Authorization': `Bearer ${access_token}`
                 }
             };
-            
+    
             return bearerOption;
         } catch (exception) {
             console.error(exception);
         }
+    }
+}
+
+async function getToken(request) {
+    const url = constants.TOKEN_URL;
+    const options = setupClientSecret(request);
+
+    try {
+        const tokens = await spotifyRequest('POST', url, options);
+        
+        return tokens;
+    } catch (exception) {
+        console.error(exception);
     }
 }
 
