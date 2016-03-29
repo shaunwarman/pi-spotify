@@ -2,7 +2,7 @@ import constants from './lib/constants';
 import keys from '../config/keys';
 import QS from 'querystring';
 import { spotifyRequest } from './httpclient';
-import { obtainOauth } from './lib/tokenUtil';
+import { oauth } from './lib/tokenUtil';
 import * as util from './util';
 
 export function loginHandler(request, reply) {
@@ -13,7 +13,7 @@ export function loginHandler(request, reply) {
         QS.stringify({
             response_type: 'code',
             client_id: keys.client_id,
-            scope: keys.scope,
+            scope: keys.scopes,
             redirect_uri: keys.redirect_uri,
             state: state
         })
@@ -22,9 +22,11 @@ export function loginHandler(request, reply) {
 
 export function getUserInfo(request, reply) {
     return async function () {
-        const bearerOptions = await obtainOauth(request, reply)();
+        const setupBearerToken = oauth(request, reply);
+        const bearerOptions = await setupBearerToken();
         
-        const response = await spotifyRequest('GET', 'https://api.spotify.com/v1/me', bearerOptions);
-        console.log(`RESPONSE: ${response}`);
+        const userTracks = await spotifyRequest('GET', 'https://api.spotify.com/v1/me/tracks', bearerOptions);
+
+        reply(userTracks);
     }
 }
