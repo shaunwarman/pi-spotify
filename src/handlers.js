@@ -20,13 +20,10 @@ export function loginHandler(request, reply) {
     )
 }
 
-export function getUserInfo(request, reply) {
-    return async function () {
-        const setupBearerToken = oauth(request, reply);
-        const bearerOptions = await setupBearerToken();
-        
-        const userTracks = await spotifyRequest('GET', 'https://api.spotify.com/v1/me/tracks', bearerOptions);
+export async function getUserInfo(request, reply) {
+    const bearerOptions = await bearerToken(request, reply);
+    
+    const userTracks = await spotifyRequest('GET', 'https://api.spotify.com/v1/me/tracks', bearerOptions);
 
-        reply(userTracks);
-    }
+    reply(userTracks);
 }

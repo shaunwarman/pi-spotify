@@ -30,7 +30,7 @@ server.route({
 server.route({
     method: 'GET',
     path:'/callback',
-    handler: (request, reply) => getUserInfo(request, reply)()
+    handler: getUserInfo
 });
 
 // start the server

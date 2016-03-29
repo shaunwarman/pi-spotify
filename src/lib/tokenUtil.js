@@ -3,21 +3,19 @@ import keys from '../../config/keys';
 import QS from 'querystring';
 import { spotifyRequest } from '../httpclient';
 
-export function oauth(request, reply) {
+export async function bearerToken(request, reply) {
     
-    return async function () {
-        try {
-            const { access_token, refresh_token } = JSON.parse(await getToken(request));
-            const bearerOption = {
-                headers: {
-                    'Authorization': `Bearer ${access_token}`
-                }
-            };
-    
-            return bearerOption;
-        } catch (exception) {
-            console.error(exception);
-        }
+    try {
+        const { access_token, refresh_token } = JSON.parse(await getToken(request));
+        const bearerOption = {
+            headers: {
+                'Authorization': `Bearer ${access_token}`
+            }
+        };
+
+        return bearerOption;
+    } catch (exception) {
+        console.error(exception);
     }
 }
 
