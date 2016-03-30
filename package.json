@@ -25,7 +25,8 @@
     "hapi": "^13.2.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
-    "wreck": "^7.1.0"
+    "wreck": "^7.1.0",
+    "yar": "^7.0.0"
   },
   "eslintConfig": {
     "extends": "google"

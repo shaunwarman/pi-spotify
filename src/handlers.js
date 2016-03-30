@@ -2,7 +2,7 @@ import constants from './lib/constants';
 import keys from '../config/keys';
 import QS from 'querystring';
 import { spotifyRequest } from './httpclient';
-import { oauth } from './lib/tokenUtil';
+import { bearerToken } from './lib/tokenUtil';
 import * as util from './util';
 
 export function loginHandler(request, reply) {
@@ -20,13 +20,10 @@ export function loginHandler(request, reply) {
     )
 }
 
-export function getUserInfo(request, reply) {
-    return async function () {
-        const setupBearerToken = oauth(request, reply);
-        const bearerOptions = await setupBearerToken();
-        
-        const userTracks = await spotifyRequest('GET', 'https://api.spotify.com/v1/me/tracks', bearerOptions);
+export async function getUserInfo(request, reply) {
+    const bearerOptions = await bearerToken(request, reply);
+    
+    const userTracks = await spotifyRequest('GET', 'https://api.spotify.com/v1/me/tracks', bearerOptions);
 
-        reply(userTracks);
-    }
+    reply(userTracks);
 }

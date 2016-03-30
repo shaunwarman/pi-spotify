@@ -8,6 +8,12 @@ import loggingOptions from './logging'
 
 // create a server with a host and port
 const server = new Hapi.Server();
+server.connection({
+    host: 'localhost',
+    port: 8000
+});
+
+// register handlebar templates
 server.register(Vision, (error) => {
     server.views({
         engines: {
@@ -15,10 +21,20 @@ server.register(Vision, (error) => {
         }
     });
 });
-server.connection({
-    host: 'localhost',
-    port: 8000
-});
+
+const options = {
+    cookieOptions: {
+        password: 'password123456789012345678901234567',
+        isSecure: false
+    }
+};
+
+// register session
+server.register({
+    register: require('yar'),
+    options: options
+}, function (err) { });
+
 
 // add routes
 server.route({
@@ -30,7 +46,7 @@ server.route({
 server.route({
     method: 'GET',
     path:'/callback',
-    handler: (request, reply) => getUserInfo(request, reply)()
+    handler: getUserInfo
 });
 
 // start the server
