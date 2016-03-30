@@ -2,7 +2,7 @@ import constants from './lib/constants';
 import keys from '../config/keys';
 import QS from 'querystring';
 import { spotifyRequest } from './httpclient';
-import { oauth } from './lib/tokenUtil';
+import { bearerToken } from './lib/tokenUtil';
 import * as util from './util';
 
 export function loginHandler(request, reply) {

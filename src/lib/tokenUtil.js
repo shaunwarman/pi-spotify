@@ -7,6 +7,10 @@ export async function bearerToken(request, reply) {
     
     try {
         const { access_token, refresh_token } = JSON.parse(await getToken(request));
+        
+        // cache refresh token
+        request.yar.set('refresh_token', { refresh_token });
+        
         const bearerOption = {
             headers: {
                 'Authorization': `Bearer ${access_token}`
