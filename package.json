@@ -21,6 +21,7 @@
     "webpack": "^1.12.14"
   },
   "dependencies": {
+    "babel-eslint": "^6.0.0",
     "babel-preset-react": "^6.5.0",
     "hapi": "^13.2.1",
     "react": "^0.14.7",

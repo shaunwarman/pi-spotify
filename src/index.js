@@ -3,8 +3,8 @@ import Hapi from 'hapi';
 import Vision from 'vision';
 import Wreck from 'wreck';
 
-import { getUserInfo, loginHandler } from './handlers'
-import loggingOptions from './logging'
+import { getUserInfo, loginHandler } from './handlers';
+import loggingOptions from './logging';
 
 // create a server with a host and port
 const server = new Hapi.Server();

@@ -17,7 +17,7 @@ export function loginHandler(request, reply) {
             redirect_uri: keys.redirect_uri,
             state: state
         })
-    )
+    );
 }
 
 export async function getUserInfo(request, reply) {
