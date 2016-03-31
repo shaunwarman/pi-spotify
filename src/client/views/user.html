@@ -1,0 +1,12 @@
+{{!< layout/default}}
+
+{{#items}}
+    <h1>{{track.album.name}}</h1>
+
+    {{#each track.album.images}}
+        {{#if @last}}
+            <img src={{this.url}} />
+        {{/if}}
+    {{/each}}
+
+{{/items}}

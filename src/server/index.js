@@ -14,6 +14,7 @@ server.connection({
     port: 8000
 });
 
+// register plugins
 server.register([
     Vision,
     plugins.cache,

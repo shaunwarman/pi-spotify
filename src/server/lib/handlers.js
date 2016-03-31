@@ -29,6 +29,7 @@ export async function getUserInfo(request, reply) {
     const bearerOptions = await bearerToken(request, reply);
     
     const userTracks = await spotifyRequest('GET', 'https://api.spotify.com/v1/me/tracks', bearerOptions);
-
-    reply(userTracks);
+    console.log(`USERTRACKS ${userTracks}`)
+    const data = JSON.parse(userTracks);
+    reply.view('user', { items: data.items });
 }
