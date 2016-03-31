@@ -1,11 +1,11 @@
 {
   "name": "pi-spotify",
   "version": "1.0.0",
-  "description": "A test es6-module",
+  "description": "A simple spotify client on raspberry pi",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir dist",
+    "build": "rm -rf dist/ && babel src --out-dir dist",
     "lint": "eslint ."
   },
   "author": "Shaun Warman",

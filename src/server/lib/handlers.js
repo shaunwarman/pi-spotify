@@ -1,15 +1,20 @@
-import constants from './lib/constants';
-import keys from '../config/keys';
+import constants from './constants';
+import keys from '../../../config/keys';
 import QS from 'querystring';
 import { spotifyRequest } from './httpclient';
-import { bearerToken } from './lib/tokenUtil';
-import * as util from './util';
+import { bearerToken } from './tokenUtil';
+import * as util from './utils';
+
+export function helloHandler(request, reply) {
+
+    return reply.view('hello', { title: 'Herro', message: 'How goes it!' });
+}
 
 export function loginHandler(request, reply) {
     const state = util.generateRandomString(16);
     const stateKey = 'spotify_auth_state';
 
-    reply.redirect('https://accounts.spotify.com/authorize?' +
+    return reply.redirect('https://accounts.spotify.com/authorize?' +
         QS.stringify({
             response_type: 'code',
             client_id: keys.client_id,
