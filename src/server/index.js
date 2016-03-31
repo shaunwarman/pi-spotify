@@ -3,8 +3,9 @@ import Hapi from 'hapi';
 import Vision from 'vision';
 import Wreck from 'wreck';
 
-import { getUserInfo, loginHandler } from './handlers';
+import { helloHandler, getUserInfo, loginHandler } from './lib/handlers';
 import { plugins } from './plugins/plugins';
+import { viewOptions } from './plugins/options/view';
 
 // create a server with a host and port
 const server = new Hapi.Server();
@@ -18,14 +19,17 @@ server.register([
     plugins.cache,
     plugins.logging
 ], (err) => {
-    server.views({
-        engines: {
-            html: require('handlebars')
-        }
-    });
+    console.log(viewOptions);
+    server.views(viewOptions);
 });
 
 // add routes
+server.route({
+    method: 'GET',
+    path: '/',
+    handler: helloHandler
+});
+
 server.route({
     method: 'GET',
     path:'/login',

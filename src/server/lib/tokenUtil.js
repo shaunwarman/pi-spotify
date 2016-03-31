@@ -1,7 +1,7 @@
 import { constants } from './constants';
-import keys from '../../config/keys';
+import keys from '../../../config/keys';
 import QS from 'querystring';
-import { spotifyRequest } from '../httpclient';
+import { spotifyRequest } from './httpclient';
 
 export async function bearerToken(request, reply) {
     

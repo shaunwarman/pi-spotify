@@ -17,7 +17,6 @@ export function spotifyRequest(method, url, options) {
                     console.error(`ERROR calling ${url} with error: ${error}`);
                     reject(error);
                 } else {
-                    console.info(`RESPONSE from ${url}: ${body.toString('utf8')}`);
                     resolve(body.toString('utf8'));
                 }
             });
