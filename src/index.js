@@ -15,7 +15,8 @@ server.connection({
 
 server.register([
     Vision,
-    plugins.cache
+    plugins.cache,
+    plugins.logging
 ], (err) => {
     server.views({
         engines: {
