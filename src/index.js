@@ -4,7 +4,7 @@ import Vision from 'vision';
 import Wreck from 'wreck';
 
 import { getUserInfo, loginHandler } from './handlers';
-import loggingOptions from './logging';
+import { plugins } from './plugins/plugins';
 
 // create a server with a host and port
 const server = new Hapi.Server();
@@ -13,28 +13,16 @@ server.connection({
     port: 8000
 });
 
-// register handlebar templates
-server.register(Vision, (error) => {
+server.register([
+    Vision,
+    plugins.cache
+], (err) => {
     server.views({
         engines: {
             html: require('handlebars')
         }
     });
 });
-
-const options = {
-    cookieOptions: {
-        password: 'password123456789012345678901234567',
-        isSecure: false
-    }
-};
-
-// register session
-server.register({
-    register: require('yar'),
-    options: options
-}, function (err) { });
-
 
 // add routes
 server.route({
